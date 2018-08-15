@@ -36,7 +36,7 @@ public class Bank {
 				System.out.println("Enter your Password:");
 				pass=g.nextLine();
 				acc.setPassword(pass);
-				for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true) flag5=1;
+				for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true){ flag5=1; break;}
 				while(flag5==1){
 					System.out.println("User Name already exist! Try other.");
 					System.out.println("Enter your User Name:");
