@@ -1,10 +1,5 @@
 import java.util.*;
 public class Bank {
-	public boolean validateUsn(ArrayList<Account> account, String usn){
-		int i, cnt=0;
-		for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)) return false;
-		return true;
-	}
 	public static void main(String[] args)throws Exception{
 		Scanner g=new Scanner(System.in);
 		System.out.println("------------------------------");
@@ -49,7 +44,7 @@ public class Bank {
 					System.out.println("Enter your Password:");
 					acc.setPassword(g.nextLine());
 					flag5=0;
-					for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)) flag5=1;
+					for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)){ flag5=1; break;}
 				}
 				System.out.println("Account Successfully Created!!!");
 				System.out.println("Your account Number is "+acc.getAccNo());
