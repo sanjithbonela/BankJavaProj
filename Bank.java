@@ -1,12 +1,14 @@
 import java.util.*;
+import java.text.*;
 public class Bank {
 	public static void main(String[] args)throws Exception{
 		Scanner g=new Scanner(System.in);
+		Date curDate; 
 		System.out.println("------------------------------");
 		System.out.println(" Welcome to Bank of Freeze!!! ");
 		System.out.println("------------------------------");
 		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
-		String nm, add, usn, pass, dep;
+		String nm, add, usn, pass, dep, pan;
 		Customer c; long mob;
 		ArrayList<Account> account = new ArrayList<Account>();
 		Account acc;
@@ -14,7 +16,8 @@ public class Bank {
 			System.out.println("Enter your choice:");
 			System.out.println("1. New Account Opening?");
 			System.out.println("2. Existing User?");
-			System.out.println("3. Exit");
+			System.out.println("3. Remove Account?");
+			System.out.println("4. Exit");
 			int choice = g.nextInt();
 			g.nextLine();
 			switch(choice){
@@ -26,7 +29,9 @@ public class Bank {
 				System.out.println("Enter your Mobile Number:");
 				mob=g.nextLong();
 				g.nextLine();
-				c=new Customer(nm,mob,add);
+				System.out.println("Enter your PAN Number:");
+				pan=g.nextLine();
+				c=new Customer(nm,mob,add,pan);
 				acc=new Account();
 				acc.setC(c);
 				acc.setAccNo();
@@ -48,6 +53,8 @@ public class Bank {
 				}
 				System.out.println("Account Successfully Created!!!");
 				System.out.println("Your account Number is "+acc.getAccNo());
+				curDate=new Date();
+				String DateToStr = DateFormat.getInstance().format(curDate);
 				System.out.println("To activate your account, please deposit Rs. 500/-");
 				System.out.println("Do you want to deposit (Y/N)?");
 				dep=g.nextLine();
@@ -94,7 +101,11 @@ public class Bank {
 				
 			case 3:
 				flag2=1;
-				break;	
+				break;
+				
+			case 4:
+				
+				break;
 			}
 			System.out.println("**********************************************************************************");
 			if(flag2==1) break;

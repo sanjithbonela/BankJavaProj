@@ -1,3 +1,5 @@
+import java.text.*;
+import java.util.*;
 public class Account {
 	private String accNo;
 	private String userName;
@@ -6,6 +8,8 @@ public class Account {
 	private Customer c;
 	private static int rand=1;
 	private double balance=0;
+	private Date created;
+	private float SancLoanAmt;
 	
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
@@ -18,12 +22,15 @@ public class Account {
 		password=p;
 	}
 	public void setC(Customer n){
-		c=new Customer(n.getName(), n.getMobNo(), n.getAddress());
+		c=new Customer(n.getName(), n.getMobNo(), n.getAddress(), n.getPAN());
 	}
 	public void setAct(String s){
 		act=s;
 	}
 	public void setBalance(double d){
+		balance=d;
+	}
+	public void deposit(double d){
 		balance+=d;
 	}
 	public double getBalance(){
