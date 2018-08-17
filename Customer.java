@@ -10,6 +10,7 @@ public class Customer {
 		address=add;
 		PAN=p;
 	}
+	
 	public void setName(String s){
 		name=s;
 	}

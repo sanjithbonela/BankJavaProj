@@ -8,10 +8,12 @@ public class Account {
 	private Customer c;
 	private static int rand=1;
 	private double balance=0;
+	private int cThreshold;
+	private int sThreshold;
 	//private float SancLoanAmt;
 	private String dt;
 	private ArrayList<Transaction> t=new ArrayList<Transaction>();
-	
+	private String accType;
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
 		rand++;
@@ -32,26 +34,71 @@ public class Account {
 	public void setBalance(double d){
 		balance=d;
 	}
+	public void setAccType( String s ){
+		accType = s;
+	}
+	public void setCThreshold(int i){
+		cThreshold = i;
+	}
+	public void setSThreshold(int i){
+		sThreshold = i;
+	}
+	
 	public void deposit(double d){
 		addTransaction(1,d);
 		balance+=d;
 		System.out.printf("Amount Rs %.2f successfully deposited.\n",d);
 	}
+	
 	public void withDraw(double d){
-		if(balance<d) System.out.println("Sorry!! Insufficient Funds.");
-		else {
-			balance-=d;
-			addTransaction(2,d);
-			System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+		if( accType.equalsIgnoreCase("Current") ){
+			if( balance-d < cThreshold) 
+				System.out.println("Sorry!! Insufficient Funds.");
+			else {
+				balance-=d;
+				addTransaction(2,d);
+				if( balance < 0)
+					System.out.println("You have Overdrafted Rs."+(balance*(-1)) );
+				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+			}
+		}else if(accType.equalsIgnoreCase("Savings")){
+			if( balance-d < sThreshold) 
+				System.out.println("Sorry!! Insufficient Funds.");
+			else {
+				balance-=d;
+				addTransaction(2,d);
+				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+			}
 		}
 	}
-	public void Transfer(double d, String bid){
-		if(balance<d) System.out.println("Sorry!! Insufficient Funds.");
-		else {
-			balance-=d;
-			addTransaction(3,d);
-			System.out.println("Amount Successfully Transferred to "+bid);
+	
+	public void Transfer(double d, String bid, Account creditor){
+		
+		if( accType.equalsIgnoreCase("Current") ){
+			if( balance-d < cThreshold) 
+				System.out.println("Sorry!! Insufficient Funds.");
+			else {
+				balance-=d;
+				addTransaction(3,d);
+				if( balance < 0)
+					System.out.println("You have Overdrafted Rs."+(balance*(-1)) );
+				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+				creditor.deposit(d);
+				System.out.println("Amount Successfully Transferred to "+bid);
+			}
+			
+		}else if(accType.equalsIgnoreCase("Savings")){
+			if( balance-d < sThreshold) 
+				System.out.println("Sorry!! Insufficient Funds.");
+			else {
+				balance-=d;
+				addTransaction(3,d);
+				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+				creditor.deposit(d);
+				System.out.println("Amount Successfully Transferred to "+bid);
+			}
 		}
+		
 	}
 	public double getBalance(){
 		return balance;
@@ -71,16 +118,74 @@ public class Account {
 	public Customer getC(){
 		return c;
 	}
+	public String getAccType(){
+		return accType;
+	}
+	public int getCThreshold(){
+		return cThreshold;
+	}
+	public int getSThreshold(){
+		return sThreshold;
+	}
+	
 	public void addTransaction(int n, double amt){
 		Transaction tr = null;
-		if(n==1) tr=new Transaction("Deposit",amt);
-		else if(n==2) tr=new Transaction("Withdraw",amt);
-		else if(n==3) tr=new Transaction("Transfer",amt);
+		
+		if(n==1) {
+			tr=new Transaction("Deposit",amt);
+		}
+		else if(n==2) {
+			tr=new Transaction("Withdraw",amt);
+		}
+		else if(n==3) {
+			tr=new Transaction("Transfer",amt);
+		}
 		if(t.size()<15) t.add(tr);
 		else{
 			t.remove(0);
 			t.add(tr);
 		}
+	}
+	public void updateDetails(){
+		System.out.println("1. Update your Address?");
+		System.out.println("2. Update your Phone No?");
+		System.out.println("3. Update your Address & Phone No?");
+		Scanner g = new Scanner(System.in);
+		long l;
+		int choice = g.nextInt();
+		g.nextLine();
+		switch(choice){
+			case 1: 
+				System.out.println("Enter your new Address");
+				c.setAddress(g.nextLine());
+				break;
+			case 2:	
+				System.out.println("Enter your new Phone No");
+				l=g.nextLong();
+				g.nextLine();
+				c.setMobNo(l);
+				break;
+			case 3:
+				System.out.println("Enter your new Phone No");
+				l=g.nextLong();
+				g.nextLine();
+				c.setMobNo(l);
+				System.out.println("Enter your new Address");
+				c.setAddress(g.nextLine());
+				break;
+			default:
+				System.out.println("Invalid Choice.");
+		}
+	}
+	public void getDetails(){
+		int i;
+		System.out.println("Name: "+getC().getName());
+		System.out.println("Mobile: "+getC().getMobNo());
+		System.out.println("Address: "+getC().getAddress());
+		System.out.println("PAN: "+getC().getPAN());
+		System.out.println("Account Number: "+getAccNo());
+		System.out.println("Account Type: "+getAccType());
+		System.out.println("Balance: "+getBalance());
 	}
 	public ArrayList<Transaction> getTList(){
 		return t;
