@@ -17,6 +17,7 @@ public class Account {
 	protected Calendar cal;
 	protected ArrayList<Transaction> t=new ArrayList<Transaction>();
 	protected String accType;
+	
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
 		rand++;
@@ -41,7 +42,8 @@ public class Account {
 	public void setAccType( String s ){
 		accType = s;
 	}
-//	public void setCThreshold(int i){
+
+	//	public void setCThreshold(int i){
 //		cThreshold = i;
 //	}
 //	public void setSThreshold(int i){
@@ -218,4 +220,5 @@ public class Account {
 		if(userName.equals(usn)&& password.equals(pass)) return true;
 		return false;
 	}
+
 }

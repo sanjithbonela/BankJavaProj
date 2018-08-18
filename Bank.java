@@ -12,6 +12,7 @@ public class Bank {
 		Customer c; long mob;		
 		Account acc=new Account();
 		Date curDate;
+
 		System.out.println("Enter your Name:");
 		nm=g.nextLine();
 		System.out.println("Enter your Address:");
@@ -38,7 +39,7 @@ public class Bank {
 		System.out.println("Enter your Account Type - Savings or Current.");
 		accType=g.nextLine();
 		if(accType.equalsIgnoreCase("Current")){
-			acc=new CurrentAccount();
+			acc = new CurrentAccount();
 			((CurrentAccount)acc).setAccNo();
 			((CurrentAccount)acc).setC(c);
 			((CurrentAccount)acc).setUserName(usn);
@@ -80,78 +81,61 @@ public class Bank {
 		return acc;
 	}
 	
-	public static void main(String[] args) throws Exception{
-		Scanner g=new Scanner(System.in);
-		int AcInput;
-		ArrayList<Account> account = new ArrayList<Account>();
-		String DateToStr;
-		Date curDate; 
-		System.out.println("-----------------------");
-		System.out.println(" Welcome to SYS Bank!!!");
-		System.out.println("-----------------------");
-		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
-		int curday,accday,curmonth,accmonth,curyear,accyear,curhour,acchour,curminute,accminute;
+	public static void accountOperation(ArrayList<Account> account) {
+		Scanner g = new Scanner(System.in);
+		String usn, pass, dep, acNo;
 		double dAmt, wAmt;
-		String nm, add, usn, pass, dep, pan, acNo, accType;
-		Customer c; long mob;		
 		Account acc, creditor=null;
+		int i, AcInput;
+		int flag1=0, flag3=0, flag4=0, flag5=0;
+		int curday,accday,curmonth,accmonth,curyear,accyear,curhour,acchour,curminute,accminute;
 		Calendar cal;
 		
-		while(true){
-			System.out.println("Enter your choice:");
-			System.out.println("1. New Account Opening?");
-			System.out.println("2. Existing User?");
-			System.out.println("3. Apply for Loan?");
-			System.out.println("4. Exit");
-			int choice = g.nextInt();
-			g.nextLine();
-			switch(choice){
-			case 1:
-				acc=createAccount(account);
-				account.add(acc);
-				break;
-				
-			case 2:
-				System.out.println("Please enter your User Name:");
-				usn=g.nextLine();
-				System.out.println("Please enter your Password");
-				pass=g.nextLine();
-				for(i=0;i<account.size();i++){
-					if(account.get(i).validate(usn, pass)){
-						if(account.get(i).Activate()==false){
-							System.out.println(account.get(i).getC().getName()+", You need to activate your account to perform transactions.");
-							System.out.println("Do you want to deposit Rs.500 for activation (Y/N)?");
-							dep=g.nextLine();
-							if(dep.equals("Y")){
-								account.get(i).setAct(dep);
-								account.get(i).setBalance(500);
-								System.out.println("Congratulations!! Your account activated successfully.");
-								System.out.println("Re-Login to perform transactions");
-								flag4=1;
-								break;
-							}
-						}
-						else if(account.get(i).Activate()==true){
-							acc = account.get(i);
-							while(true){
-							System.out.println("Successfully Logged in");
-							System.out.println("Welcome to the Portal, "+account.get(i).getC().getName()+".");
-							System.out.printf("Your Balance is Rs.%.2f\n", account.get(i).getBalance());
-							flag3=1;
-							// ---Account Menu----
-							System.out.println("1. Deposit Amount.");
-							System.out.println("2. Withdraw Amount.");
-							System.out.println("3. Transfer Amount.");
-							System.out.println("4. Show Mini Statement.");
-							System.out.println("5. Apply for Loans.");
-							System.out.println("6. Update Details.");
-							System.out.println("7. View Details.");
-							System.out.println("8. Remove Account");
-							System.out.println("9. Log Out.");
-							AcInput = g.nextInt();
-							g.nextLine();
-							
-							switch(AcInput){
+		System.out.println("Please enter your User Name:");
+		usn=g.nextLine();
+		System.out.println("Please enter your Password");
+		pass=g.nextLine();
+		for(i=0;i<account.size();i++){			
+			if(account.get(i).validate(usn, pass)){	
+				//----Check For If A/C Activation Status Is False?-----
+				if(account.get(i).Activate()==false){
+					System.out.println(account.get(i).getC().getName()+", You need to activate your account to perform transactions.");
+					System.out.println("Do you want to deposit Rs.500 for activation (Y/N)?");
+					dep=g.nextLine();
+					if(dep.equals("Y")){
+						account.get(i).setAct(dep);
+						account.get(i).setBalance(500);
+						System.out.println("Congratulations!! Your account activated successfully.");
+						System.out.println("Re-Login to perform transactions");
+						flag4=1;
+						break;
+					}
+				}
+				//----If A/C Is Activated-----
+				else if(account.get(i).Activate()==true){
+					acc = account.get(i);
+					while(true){
+						System.out.println("Successfully Logged in");
+						System.out.println("Welcome to the Portal, "+account.get(i).getC().getName()+".");
+						System.out.printf("Your Balance is Rs.%.2f\n", account.get(i).getBalance());
+						flag3=1;
+						// ---Account Menu----
+						System.out.println("---------------------------");
+						System.out.println("1. Deposit Amount.");
+						System.out.println("2. Withdraw Amount.");
+						System.out.println("3. Transfer Amount.");
+						System.out.println("4. Show Mini Statement.");
+						System.out.println("5. Apply for Loans.");
+						System.out.println("6. Update Details.");
+						System.out.println("7. View Details.");
+						System.out.println("8. Remove Account");
+						System.out.println("9. Log Out.");
+						System.out.println("---------------------------");
+						System.out.print("Enter Choice Number: ");
+						AcInput = g.nextInt();
+						g.nextLine();
+						
+						switch(AcInput){
 							case 1:
 								System.out.println("Enter the Deposit Amount");
 								dAmt = g.nextDouble();
@@ -253,30 +237,63 @@ public class Bank {
 							default:
 								System.out.println("Invalid Input. Enter correct Choice.");
 								break;
-							}
-							if(flag1==1) break;
 						}
-						}
+						if(flag1==1) 
+							break;
 					}
+					break;
 				}
-				if((flag3==0)&&(flag4==0)) System.out.println("Oops!! Wrong User Name or Password.\nContact admin to recover your credentials.");
-				else{
-					
-				}
-				break;
-				
-			case 3:
-				
-				flag2=1;
-				break;
-				
-			case 4:
-				flag2=1;
-				
-				break;
+			}
+		}
+		
+		if((flag3==0)&&(flag4==0)) 
+			System.out.println("Oops!! Wrong User Name or Password.\nContact admin to recover your credentials.");
+		else{
+			
+		}
+	}
+	
+	public static void loanOpeartion( ArrayList<Account> account ){
+
+	}
+
+	public static void main(String[] args) throws Exception{
+		Scanner g=new Scanner(System.in);
+		ArrayList<Account> account = new ArrayList<Account>();		
+		int choice, flag2=0;
+		Account acc ;
+		
+		System.out.println("-----------------------");
+		System.out.println(" Welcome to SYS Bank!!!");
+		System.out.println("-----------------------");
+
+		while(true){
+			System.out.println("Enter your choice:");
+			System.out.println("1. New Account Opening?");
+			System.out.println("2. Existing User?");
+			System.out.println("3. Apply for Loan?");
+			System.out.println("4. Exit");
+			choice = g.nextInt();
+			g.nextLine();
+			
+			switch(choice){
+				case 1:
+					acc=createAccount(account);
+					account.add(acc);
+					break;				
+				case 2:
+					accountOperation(account);
+					break;				
+				case 3:				
+					flag2=1;
+					break;				
+				case 4:
+					flag2=1;				
+					break;
 			}
 			System.out.println("**********************************************************************************");
-			if(flag2==1) break;
+			if(flag2==1) 
+				break;
 		}
 	}
 }

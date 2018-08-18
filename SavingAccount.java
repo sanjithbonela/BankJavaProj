@@ -1,5 +1,16 @@
 package BankJavaProj;
+
 public class SavingAccount extends Account {
+	private double threshold;
+	
+	public void setThreshold(double th) {
+		threshold = th;
+	}
+	
+	public double getThreshold() {
+		return threshold;
+	}
+	
 	@Override
 	public void withDraw(double d){
 		if( balance-d < 0) 
