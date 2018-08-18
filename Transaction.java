@@ -18,7 +18,7 @@ public class Transaction {
 		//dt.substring(0,1)+dt.substring(2,4)+dt.substring(6,8)
 		//dt.substring(0,2)+dt.substring(3,5)+dt.substring(7,9)
 		/*if(dt.charAt(1)=='/')	*/		
-			tid="0"+"17-8-2018"+"YASHA000000"+String.valueOf(rand);
+			tid="2018"+"YASHA000000"+String.valueOf(rand);
 		/*else
 			tid="17-8-2018"+"YASHA000000"+String.valueOf(rand);	*/
 		rand++;

@@ -44,10 +44,10 @@ public class LoanReport {
 		dt=DateFormat.getInstance().format(new Date());
 	}
 	public void setLoanId(){
-		if(dt.charAt(1)=='/')
-			loanId="0"+dt.substring(0,1)+dt.substring(2,4)+dt.substring(6,8)+"MONDAL000000"+String.valueOf(rand);
-		else
-			loanId=dt.substring(0,2)+dt.substring(3,5)+dt.substring(7,9)+"MONDAL000000"+String.valueOf(rand);	
+		//if(dt.charAt(1)=='/')
+			loanId="2018"+"MONDAL000000"+String.valueOf(rand);
+		//else
+			//loanId=dt.substring(0,2)+dt.substring(3,5)+dt.substring(7,9)+"MONDAL000000"+String.valueOf(rand);	
 		rand++;
 	}
 	public String getLoanId(){
