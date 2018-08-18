@@ -1,11 +1,17 @@
 package BankJavaProj;
-
 import java.util.*;
+
 public class Loan {
 	private Account acc;
-	private double [][] scheme=new double[3][4];
-	private double[][] interest=new double[3][4];
-	private double amt=0;
+	/*
+		Scheme defines the threshold for different min limits of loan for 
+		each category i.e., Individual loan, house loan and Auto Loan for
+		each segment i.e., Savings A/C & Current A/C.
+	*/
+	private double [][] scheme = new double[3][4];
+	private double[][] interest = new double[3][4];
+	private double amt = 0;
+	// -- Aggregate Loan Report for Bank Manager
 	private ArrayList<LoanReport> lr = new ArrayList<LoanReport>();
 	public static String s="";
 	public static double in=0;
@@ -135,4 +141,40 @@ public class Loan {
 		return amt;
 	}
 	
+	public void interface( Account acc ){
+		int mxAttempt=3, attempt=0, diff;
+		int resp;
+
+		diff = mxAttempt - attempt;
+		while(diff > 0){
+			attempt++;
+
+			System.out.println("\nChoose Your Loan Application Type >>");
+			System.out.println("1. Personal Loan ");
+			System.out.println("2. Property Loan ");
+			System.out.println("3. Automobile Loan ");
+			System.out.println("4. Exit Portal ");
+			System.out.print("\nResponse : ");
+			resp = in.nextInt();
+
+			switch( resp ){
+				case 1:
+					diff = 0;
+					break;
+				case 2:
+					diff = 0;
+					break;
+				case 3:
+					diff = 0;
+					break;
+				case 4:
+					break;
+				default:
+					System.out.println("\nWrong Input..."+ diff +" Attempts left");
+					break;
+			}
+		}
+
+	}
+
 }

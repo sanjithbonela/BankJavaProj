@@ -253,13 +253,76 @@ public class Bank {
 		}
 	}
 	
-	public static void loanOpeartion( ArrayList<Account> account ){
+	public static void loanOpeartion( ArrayList<Account> account, Loan loanSegment ){
+		Scanner in = new Scanner(System.in);
+		String resp, usn, pass;
+		boolean isValidUsr = false;
+		Account usrAcc;
+		int mxAttempt=3, attempt=0, diff;
+
+		System.out.println("------------------------------");
+		System.out.println("    Welcome To Loan Portal    ");
+		System.out.println("------------------------------");
+
+		System.out.print("\nDo You have an Account With Us (Y/N) ?");
+		resp = in.nextLine();
+
+		while(attempt <= mxAttempt){
+			attempt++;
+			diff = mxAttempt - attempt;
+
+			if( resp.equalsIgnoreCase("Y")){
+				attempt = 0;
+
+				while( attempt <= mxAttempt ){
+					attempt++;
+					diff = mxAttempt - attempt;
+
+					System.out.print("User Name : ");
+					usn = in.nextLine();
+					System.out.print("\nPassword : ");
+					pass = in.nextLine();
+
+					for(Account acc: account ){
+						if( acc.validate(usn, pass) ){
+							isValidUsr = true;
+							usrAcc = acc;
+							break;
+						}
+					}
+
+					if( isValidUsr ){
+						loanSegment.interface(usrAcc);
+					}else{
+						System.out.println("Wrong UserName or Password... "+ diff +" Attempts left.\n\n");
+						if( diff == 0 ){
+							System.oput.println("Redirecting to main menu...\n\n");
+							break;
+						}
+					}
+				}
+
+			}else if( resp.equalsIgnoreCase("N") ){
+				System.out.println("Please Create An Account First \nBefore Proceding Further");
+				break;
+			}else{
+				System.out.println("Invalid Input!! "+ diff +" Attempts Left.");
+				if( diff == 0){
+					System.oput.println("Redirecting to main menu...\n\n");
+					break;
+				}else{
+					System.out.print("\nResponse (Y/N) :");
+					resp = in.nextLine();
+				}
+			}
+		}
 
 	}
 
 	public static void main(String[] args) throws Exception{
 		Scanner g=new Scanner(System.in);
-		ArrayList<Account> account = new ArrayList<Account>();		
+		ArrayList<Account> account = new ArrayList<Account>();
+		Loan LoanSegment = new Loan();		
 		int choice, flag2=0;
 		Account acc ;
 		
@@ -284,8 +347,8 @@ public class Bank {
 				case 2:
 					accountOperation(account);
 					break;				
-				case 3:				
-					flag2=1;
+				case 3:	
+					loanOpeartion(account, LoanSegment);
 					break;				
 				case 4:
 					flag2=1;				
