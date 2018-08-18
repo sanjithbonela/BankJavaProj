@@ -1,15 +1,67 @@
 import java.util.*;
 import java.text.*;
 public class Bank {
+	public static Account createAccount(ArrayList<Account> account){
+		Scanner g=new Scanner(System.in);
+		Account acc=new Account();
+		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
+		String nm, add, usn, pass, dep, pan, acNo, accType;
+		Customer c; long mob; Date curDate;
+		//******************************************************
+		System.out.println("Enter your Name:");
+		nm=g.nextLine();
+		System.out.println("Enter your Address:");
+		add=g.nextLine();
+		System.out.println("Enter your Mobile Number:");
+		mob=g.nextLong();
+		g.nextLine();
+		System.out.println("Enter your PAN Number:");
+		pan=g.nextLine();
+		c=new Customer(nm,mob,add,pan);
+		acc=new Account();
+		acc.setC(c);
+		acc.setAccNo();
+		System.out.println("Enter your User Name:");
+		usn=g.nextLine();
+		for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true){ flag5=1; break;}
+		while(flag5==1){
+			System.out.println("User Name already exist! Try other.");
+			System.out.println("Enter your User Name:");
+			usn=g.nextLine();
+			flag5=0;
+			for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)){ flag5=1; break;}
+		}
+		acc.setUserName(usn);
+		System.out.println("Enter your Password:");
+		pass=g.nextLine();
+		acc.setPassword(pass);
+		System.out.println("Enter your Account Type - Savings or Current.");
+		accType=g.nextLine();
+		acc.setAccType(accType);
+		System.out.println(acc.getAccType().toUpperCase()+" Account Successfully Created!!!");
+		System.out.println("Your account Number is "+acc.getAccNo());
+		curDate=new Date();
+		String DateToStr = DateFormat.getInstance().format(curDate);
+		System.out.println("To activate your account, please deposit Rs. 500/-");
+		System.out.println("Do you want to deposit (Y/N)?");
+		dep=g.nextLine();
+		if(dep.equals("Y")){
+			acc.setAct(dep);
+			System.out.println("Congratulations!! Your account activated successfully.");
+			acc.setBalance(500);
+		}
+		//******************************************************
+		return acc;
+	} 
 	public static void main(String[] args)throws Exception{
 		Scanner g=new Scanner(System.in);
 		int AcInput;
 		ArrayList<Account> account = new ArrayList<Account>();
 		
 		Date curDate; 
-		System.out.println("------------------------------");
-		System.out.println(" Welcome to Bank of Freeze!!! ");
-		System.out.println("------------------------------");
+		System.out.println("------------------------");
+		System.out.println(" Welcome to SYS Bank!!! ");
+		System.out.println("------------------------");
 		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
 		double dAmt, wAmt;
 		String nm, add, usn, pass, dep, pan, acNo, accType;
@@ -26,7 +78,9 @@ public class Bank {
 			g.nextLine();
 			switch(choice){
 			case 1:
-				System.out.println("Enter your Name:");
+				acc = createAccount(account);
+				account.add(acc);
+				/*System.out.println("Enter your Name:");
 				nm=g.nextLine();
 				System.out.println("Enter your Address:");
 				add=g.nextLine();
@@ -68,7 +122,7 @@ public class Bank {
 					System.out.println("Congratulations!! Your account activated successfully.");
 					acc.setBalance(500);
 				}
-				account.add(acc);
+				account.add(acc);*/
 				break;
 				
 			case 2:
