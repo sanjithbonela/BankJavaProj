@@ -20,18 +20,18 @@ public class Bank {
 		System.out.println("Enter your PAN Number:");
 		pan=g.nextLine();
 		c=new Customer(nm,mob,add,pan);
-		System.out.println("Enter your User Name:");
+		System.out.println("Set User Name:");
 		usn=g.nextLine();
 		for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true){ flag5=1; break;}
 		while(flag5==1){
 			System.out.println("User Name already exist! Try other.");
-			System.out.println("Enter your User Name:");
+			System.out.println("Set User Name:");
 			usn=g.nextLine();
 			flag5=0;
 			for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)){ flag5=1; break;}
 		}
 		
-		System.out.println("Enter your Password:");
+		System.out.println("Set Password:");
 		pass=g.nextLine();
 		System.out.println("Enter your Account Type - Savings or Current.");
 		accType=g.nextLine();
@@ -46,10 +46,10 @@ public class Bank {
 			System.out.println("Your account Number is "+((CurrentAccount)acc).getAccNo());
 			curDate=new Date();
 			String DateToStr = DateFormat.getInstance().format(curDate);
-			System.out.println("CUR To activate your account, please deposit Rs. 500/-");
+			System.out.println("To activate your account, please deposit Rs. 500/-");
 			System.out.println("Do you want to deposit (Y/N)?");
 			dep=g.nextLine();
-			if(dep.equals("Y")){
+			if(dep.equalsIgnoreCase("Y")){
 				acc.setAct(dep);
 				System.out.println("Congratulations!! Your account activated successfully.");
 				acc.deposit(500);
@@ -66,10 +66,10 @@ public class Bank {
 			System.out.println("Your account Number is "+((SavingAccount)acc).getAccNo());
 			curDate=new Date();
 			String DateToStr = DateFormat.getInstance().format(curDate);
-			System.out.println("SAV To activate your account, please deposit Rs. 500/-");
+			System.out.println("To activate your account, please deposit Rs. 500/-");
 			System.out.println("Do you want to deposit (Y/N)?");
 			dep=g.nextLine();
-			if(dep.equals("Y")){
+			if(dep.equalsIgnoreCase("Y")){
 				acc.setAct(dep);
 				System.out.println("Congratulations!! Your account activated successfully.");
 				acc.deposit(500);
@@ -98,7 +98,7 @@ public class Bank {
 			System.out.println("Enter your choice:");
 			System.out.println("1. New Account Opening?");
 			System.out.println("2. Existing User?");
-			System.out.println("3. Remove Account?");
+			System.out.println("3. Apply for Loan?");
 			System.out.println("4. Exit");
 			int choice = g.nextInt();
 			g.nextLine();
@@ -177,6 +177,7 @@ public class Bank {
 								acc.displayTransReport();
 								break;
 							case 5:
+								
 								break;
 							case 6:
 								acc.updateDetails();
