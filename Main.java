@@ -1,4 +1,6 @@
-package otp;
+package BankJavaProj;
+
+/*package otp;
 import java.awt.BorderLayout;
 
 import javax.swing.Box;
@@ -28,4 +30,4 @@ public class Main {
     System.out.println(jpassword.getEchoChar());
     
   }
-}
+}*/

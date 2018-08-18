@@ -1,3 +1,5 @@
+package BankJavaProj;
+
 import java.util.*;
 import java.text.*;
 public class LoanReport {

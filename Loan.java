@@ -1,3 +1,5 @@
+package BankJavaProj;
+
 import java.util.*;
 public class Loan {
 	private Account acc;

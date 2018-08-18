@@ -1,3 +1,5 @@
+package BankJavaProj;
+
 import java.util.*;
 import java.text.*;
 
@@ -77,7 +79,8 @@ public class Bank {
 		}
 		return acc;
 	}
-	public static void main(String[] args)throws Exception{
+	
+	public static void main(String[] args) throws Exception{
 		Scanner g=new Scanner(System.in);
 		int AcInput;
 		ArrayList<Account> account = new ArrayList<Account>();

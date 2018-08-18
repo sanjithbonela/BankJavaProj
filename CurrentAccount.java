@@ -1,6 +1,16 @@
+package BankJavaProj;
 
 public class CurrentAccount extends Account {
-	private double threshold=-100000;
+	private double threshold;
+	
+	public void setThreshold(double th) {
+		threshold = th;
+	}
+	
+	public double getThreshold() {
+		return threshold;
+	}
+	
 	@Override
 	public void withDraw(double d){
 		if( balance-d < threshold) 

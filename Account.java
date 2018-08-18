@@ -1,3 +1,5 @@
+package BankJavaProj;
+
 import java.text.*;
 import java.util.*;
 public class Account {
@@ -209,9 +211,7 @@ public class Account {
 		} 
 	}
 	public boolean Activate(){
-		//System.out.println("Line 40");
 		if(getAct().equals("Y")) return true;
-		//System.out.println("Line 42");
 		return false;
 	}
 	public boolean validate(String usn, String pass){
