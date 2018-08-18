@@ -1,13 +1,15 @@
 import java.util.*;
 import java.text.*;
+
 public class Bank {
 	public static Account createAccount(ArrayList<Account> account){
 		Scanner g=new Scanner(System.in);
-		Account acc=new Account();
 		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
+		double dAmt, wAmt;
 		String nm, add, usn, pass, dep, pan, acNo, accType;
-		Customer c; long mob; Date curDate;
-		//******************************************************
+		Customer c; long mob;		
+		Account acc=new Account();
+		Date curDate;
 		System.out.println("Enter your Name:");
 		nm=g.nextLine();
 		System.out.println("Enter your Address:");
@@ -18,9 +20,6 @@ public class Bank {
 		System.out.println("Enter your PAN Number:");
 		pan=g.nextLine();
 		c=new Customer(nm,mob,add,pan);
-		acc=new Account();
-		acc.setC(c);
-		acc.setAccNo();
 		System.out.println("Enter your User Name:");
 		usn=g.nextLine();
 		for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true){ flag5=1; break;}
@@ -31,42 +30,69 @@ public class Bank {
 			flag5=0;
 			for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)){ flag5=1; break;}
 		}
-		acc.setUserName(usn);
+		
 		System.out.println("Enter your Password:");
 		pass=g.nextLine();
-		acc.setPassword(pass);
 		System.out.println("Enter your Account Type - Savings or Current.");
 		accType=g.nextLine();
-		acc.setAccType(accType);
-		System.out.println(acc.getAccType().toUpperCase()+" Account Successfully Created!!!");
-		System.out.println("Your account Number is "+acc.getAccNo());
-		curDate=new Date();
-		String DateToStr = DateFormat.getInstance().format(curDate);
-		System.out.println("To activate your account, please deposit Rs. 500/-");
-		System.out.println("Do you want to deposit (Y/N)?");
-		dep=g.nextLine();
-		if(dep.equals("Y")){
-			acc.setAct(dep);
-			System.out.println("Congratulations!! Your account activated successfully.");
-			acc.setBalance(500);
+		if(accType.equalsIgnoreCase("Current")){
+			acc=new CurrentAccount();
+			((CurrentAccount)acc).setAccNo();
+			((CurrentAccount)acc).setC(c);
+			((CurrentAccount)acc).setUserName(usn);
+			((CurrentAccount)acc).setPassword(pass);
+			((CurrentAccount)acc).setAccType(accType);
+			System.out.println(acc.getAccType().toUpperCase()+" Account Successfully Created!!!");
+			System.out.println("Your account Number is "+((CurrentAccount)acc).getAccNo());
+			curDate=new Date();
+			String DateToStr = DateFormat.getInstance().format(curDate);
+			System.out.println("CUR To activate your account, please deposit Rs. 500/-");
+			System.out.println("Do you want to deposit (Y/N)?");
+			dep=g.nextLine();
+			if(dep.equals("Y")){
+				acc.setAct(dep);
+				System.out.println("Congratulations!! Your account activated successfully.");
+				acc.deposit(500);
+			}
 		}
-		//******************************************************
+		else if(accType.equalsIgnoreCase("Savings")){
+			acc=new SavingAccount();
+			((SavingAccount)acc).setAccNo();
+			((SavingAccount)acc).setC(c);
+			((SavingAccount)acc).setUserName(usn);
+			((SavingAccount)acc).setPassword(pass);
+			((SavingAccount)acc).setAccType(accType);
+			System.out.println(acc.getAccType().toUpperCase()+" Account Successfully Created!!!");
+			System.out.println("Your account Number is "+((SavingAccount)acc).getAccNo());
+			curDate=new Date();
+			String DateToStr = DateFormat.getInstance().format(curDate);
+			System.out.println("SAV To activate your account, please deposit Rs. 500/-");
+			System.out.println("Do you want to deposit (Y/N)?");
+			dep=g.nextLine();
+			if(dep.equals("Y")){
+				acc.setAct(dep);
+				System.out.println("Congratulations!! Your account activated successfully.");
+				acc.deposit(500);
+			}
+		}
 		return acc;
-	} 
+	}
 	public static void main(String[] args)throws Exception{
 		Scanner g=new Scanner(System.in);
 		int AcInput;
 		ArrayList<Account> account = new ArrayList<Account>();
-		
+		String DateToStr;
 		Date curDate; 
-		System.out.println("------------------------");
-		System.out.println(" Welcome to SYS Bank!!! ");
-		System.out.println("------------------------");
+		System.out.println("-----------------------");
+		System.out.println(" Welcome to SYS Bank!!!");
+		System.out.println("-----------------------");
 		int i, ind=0, flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
+		int curday,accday,curmonth,accmonth,curyear,accyear,curhour,acchour,curminute,accminute;
 		double dAmt, wAmt;
 		String nm, add, usn, pass, dep, pan, acNo, accType;
 		Customer c; long mob;		
 		Account acc, creditor=null;
+		Calendar cal;
 		
 		while(true){
 			System.out.println("Enter your choice:");
@@ -78,51 +104,8 @@ public class Bank {
 			g.nextLine();
 			switch(choice){
 			case 1:
-				acc = createAccount(account);
+				acc=createAccount(account);
 				account.add(acc);
-				/*System.out.println("Enter your Name:");
-				nm=g.nextLine();
-				System.out.println("Enter your Address:");
-				add=g.nextLine();
-				System.out.println("Enter your Mobile Number:");
-				mob=g.nextLong();
-				g.nextLine();
-				System.out.println("Enter your PAN Number:");
-				pan=g.nextLine();
-				c=new Customer(nm,mob,add,pan);
-				acc=new Account();
-				acc.setC(c);
-				acc.setAccNo();
-				System.out.println("Enter your User Name:");
-				usn=g.nextLine();
-				for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)==true){ flag5=1; break;}
-				while(flag5==1){
-					System.out.println("User Name already exist! Try other.");
-					System.out.println("Enter your User Name:");
-					usn=g.nextLine();
-					flag5=0;
-					for(i=0;i<account.size();i++) if(account.get(i).getUserName().equals(usn)){ flag5=1; break;}
-				}
-				acc.setUserName(usn);
-				System.out.println("Enter your Password:");
-				pass=g.nextLine();
-				acc.setPassword(pass);
-				System.out.println("Enter your Account Type - Savings or Current.");
-				accType=g.nextLine();
-				acc.setAccType(accType);
-				System.out.println(acc.getAccType().toUpperCase()+" Account Successfully Created!!!");
-				System.out.println("Your account Number is "+acc.getAccNo());
-				curDate=new Date();
-				String DateToStr = DateFormat.getInstance().format(curDate);
-				System.out.println("To activate your account, please deposit Rs. 500/-");
-				System.out.println("Do you want to deposit (Y/N)?");
-				dep=g.nextLine();
-				if(dep.equals("Y")){
-					acc.setAct(dep);
-					System.out.println("Congratulations!! Your account activated successfully.");
-					acc.setBalance(500);
-				}
-				account.add(acc);*/
 				break;
 				
 			case 2:
@@ -160,7 +143,8 @@ public class Bank {
 							System.out.println("5. Apply for Loans.");
 							System.out.println("6. Update Details.");
 							System.out.println("7. View Details.");
-							System.out.println("8. Log Out.");
+							System.out.println("8. Remove Account");
+							System.out.println("9. Log Out.");
 							AcInput = g.nextInt();
 							g.nextLine();
 							
@@ -176,7 +160,7 @@ public class Bank {
 								acc.withDraw(wAmt);
 								break;
 							case 3:
-								System.out.println("Benificiary A/C number :");
+								System.out.println("Beneficiary A/C number :");
 								acNo = g.nextLine();
 								for( Account a: account){
 									if( a.getAccNo().equals(acNo)){
@@ -201,6 +185,64 @@ public class Bank {
 								acc.getDetails();
 								break;
 							case 8:
+								cal=Calendar.getInstance();
+								//DateToStr = DateFormat.getInstance().format(new Date());
+								curday = cal.get(Calendar.DAY_OF_MONTH);//Integer.parseInt(DateToStr.substring(2,4));
+								accday = acc.getCal().get(Calendar.DAY_OF_MONTH);//Integer.parseInt(acc.getDt().substring(2,4));
+								//System.out.println("cur "+Integer.parseInt(DateToStr.substring(0,2))+" Acc "+Integer.parseInt(acc.getDt().substring(0,2)));
+								curmonth = cal.get(Calendar.MONTH);//Integer.parseInt(DateToStr.substring(0,1));
+								accmonth = acc.getCal().get(Calendar.MONTH);//Integer.parseInt(acc.getDt().substring(0,1));
+								
+								curyear = cal.get(Calendar.YEAR);//Integer.parseInt(DateToStr.substring(5,7));
+								accyear = acc.getCal().get(Calendar.YEAR);//Integer.parseInt(acc.getDt().substring(5,7));
+								
+								curhour = cal.get(Calendar.HOUR_OF_DAY);//Integer.parseInt(DateToStr.substring(8,10));
+								acchour = acc.getCal().get(Calendar.HOUR_OF_DAY);//Integer.parseInt(acc.getDt().substring(8,10));
+								
+								curminute = cal.get(Calendar.MINUTE);//Integer.parseInt(DateToStr.substring(11,13));
+								accminute = acc.getCal().get(Calendar.MINUTE);//Integer.parseInt(acc.getDt().substring(11,13));
+								
+								if(accyear - curyear ==0){
+									if(accmonth - curmonth ==0){
+										if(accday - curday ==0){
+											if(acchour - curhour ==0){
+												if(curminute - accminute < 1){
+													System.out.println("You need to wait 6 months after opening the account to close it.");
+												}
+												else {
+													System.out.println("You can collect your balance at the Bank by showing required documents.");
+													account.remove(i);
+													flag5=1;
+												}
+											}
+											else {
+												System.out.println("You can collect your balance at the Bank by showing required documents.");
+												account.remove(i);
+												flag5=1;
+											}
+										}
+										else {
+											System.out.println("You can collect your balance at the Bank by showing required documents.");
+											account.remove(i);
+											flag5=1;
+										}
+									}
+									else {
+										System.out.println("You can collect your balance at the Bank by showing required documents.");
+										account.remove(i);
+										flag5=1;
+									}
+								}
+								else {
+									System.out.println("You can collect your balance at the Bank by showing required documents.");
+									account.remove(i);
+									flag5=1;
+								}
+							case 9:
+								if(flag5==1){
+									System.out.println("Account Successfully Removed!!");
+									System.out.println("Thank you for banking with us.");
+								}
 								System.out.println("Successfully Logged out!!");
 								flag1=1;
 								break;
@@ -220,6 +262,7 @@ public class Bank {
 				break;
 				
 			case 3:
+				
 				flag2=1;
 				break;
 				

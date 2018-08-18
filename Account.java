@@ -1,19 +1,20 @@
 import java.text.*;
 import java.util.*;
 public class Account {
-	private String accNo;
-	private String userName;
-	private String password;
-	private String act="false";
-	private Customer c;
-	private static int rand=1;
-	private double balance=0;
-	private int cThreshold;
-	private int sThreshold;
+	protected String accNo;
+	protected String userName;
+	protected String password;
+	protected String act="false";
+	protected Customer c;
+	protected static int rand=1;
+	protected double balance=0;
+	//protected int cThreshold;
+	//protected int sThreshold;
 	//private float SancLoanAmt;
-	private String dt;
-	private ArrayList<Transaction> t=new ArrayList<Transaction>();
-	private String accType;
+	protected String dt;
+	protected Calendar cal;
+	protected ArrayList<Transaction> t=new ArrayList<Transaction>();
+	protected String accType;
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
 		rand++;
@@ -23,6 +24,7 @@ public class Account {
 	}
 	public void setPassword(String p){
 		password=p;
+		cal = Calendar.getInstance();
 		dt=DateFormat.getInstance().format(new Date());
 	}
 	public void setC(Customer n){
@@ -37,12 +39,12 @@ public class Account {
 	public void setAccType( String s ){
 		accType = s;
 	}
-	public void setCThreshold(int i){
-		cThreshold = i;
-	}
-	public void setSThreshold(int i){
-		sThreshold = i;
-	}
+//	public void setCThreshold(int i){
+//		cThreshold = i;
+//	}
+//	public void setSThreshold(int i){
+//		sThreshold = i;
+//	}
 	
 	public void deposit(double d){
 		addTransaction(1,d);
@@ -51,31 +53,35 @@ public class Account {
 	}
 	
 	public void withDraw(double d){
-		if( accType.equalsIgnoreCase("Current") ){
-			if( balance-d < cThreshold) 
-				System.out.println("Sorry!! Insufficient Funds.");
-			else {
-				balance-=d;
-				addTransaction(2,d);
-				if( balance < 0)
-					System.out.println("You have Overdrafted Rs."+(balance*(-1)) );
-				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
-			}
-		}else if(accType.equalsIgnoreCase("Savings")){
-			if( balance-d < sThreshold) 
-				System.out.println("Sorry!! Insufficient Funds.");
-			else {
-				balance-=d;
-				addTransaction(2,d);
-				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
-			}
-		}
+//	/*	if( accType.equalsIgnoreCase("Current") ){
+//			CurrentAccount obj1 = new CurrentAccount();
+//		}
+//			/*if( balance-d < cThreshold) 
+//				System.out.println("Sorry!! Insufficient Funds.");
+//			else {
+//				balance-=d;
+//				addTransaction(2,d);
+//				if( balance < 0)
+//					System.out.println("You have Overdrafted Rs."+(balance*(-1)) );
+//				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+//			}*/
+//		}else if(accType.equalsIgnoreCase("Savings")){
+//			SavingAccount obj2 = new SavingAccount();
+//		}
+//			/*if( balance-d < sThreshold) 
+//				System.out.println("Sorry!! Insufficient Funds.");
+//			else {
+//				balance-=d;
+//				addTransaction(2,d);
+//				System.out.printf("Amount Rs %.2f successfully withdrawn.",d);
+//			}*/
+//		}*/
 	}
 	
 	public void Transfer(double d, String bid, Account creditor){
 		
 		if( accType.equalsIgnoreCase("Current") ){
-			if( balance-d < cThreshold) 
+			if( balance-d < -100000) 
 				System.out.println("Sorry!! Insufficient Funds.");
 			else {
 				balance-=d;
@@ -88,7 +94,7 @@ public class Account {
 			}
 			
 		}else if(accType.equalsIgnoreCase("Savings")){
-			if( balance-d < sThreshold) 
+			if( balance-d <= 0) 
 				System.out.println("Sorry!! Insufficient Funds.");
 			else {
 				balance-=d;
@@ -121,12 +127,18 @@ public class Account {
 	public String getAccType(){
 		return accType;
 	}
-	public int getCThreshold(){
-		return cThreshold;
+	public String getDt(){
+		return dt;
 	}
-	public int getSThreshold(){
-		return sThreshold;
+	public Calendar getCal(){
+		return cal;
 	}
+//	public int getCThreshold(){
+//		return cThreshold;
+//	}
+//	public int getSThreshold(){
+//		return sThreshold;
+//	}
 	
 	public void addTransaction(int n, double amt){
 		Transaction tr = null;
