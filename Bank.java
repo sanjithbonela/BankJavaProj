@@ -257,58 +257,63 @@ public class Bank {
 		Scanner in = new Scanner(System.in);
 		String resp, usn, pass;
 		boolean isValidUsr = false;
-		Account usrAcc;
-		int mxAttempt=3, attempt=0, diff;
+		Account usrAcc = null;
+		int mxAttempt=3, attempt=0, diff=3;
 
 		System.out.println("------------------------------");
 		System.out.println("    Welcome To Loan Portal    ");
 		System.out.println("------------------------------");
 
-		System.out.print("\nDo You have an Account With Us (Y/N) ?");
+		System.out.print("\nDo You have an Account With Us (Y/N) ? ");
 		resp = in.nextLine();
 
-		while(attempt <= mxAttempt){
+		while( diff > 0 ){
 			attempt++;
 			diff = mxAttempt - attempt;
 
 			if( resp.equalsIgnoreCase("Y")){
 				attempt = 0;
-
-				while( attempt <= mxAttempt ){
+				diff = 3;
+				while( diff > 0 ){
 					attempt++;
 					diff = mxAttempt - attempt;
 
 					System.out.print("User Name : ");
 					usn = in.nextLine();
-					System.out.print("\nPassword : ");
+					System.out.print("Password : ");
 					pass = in.nextLine();
 
 					for(Account acc: account ){
 						if( acc.validate(usn, pass) ){
 							isValidUsr = true;
-							usrAcc = acc;
+							usrAcc = acc;							
 							break;
 						}
 					}
 
-					if( isValidUsr ){
-						loanSegment.interface(usrAcc);
+					if( isValidUsr && usrAcc.getAct().equals("Y") ){
+						loanSegment.interfaceApp(usrAcc);
+						diff = 0;
+					}else if(isValidUsr){
+						System.out.println("Your A/C is not activated. Pls. Activate your A/C. \nRedirecting to main menu...");
+						diff = 0;
 					}else{
 						System.out.println("Wrong UserName or Password... "+ diff +" Attempts left.\n\n");
 						if( diff == 0 ){
-							System.oput.println("Redirecting to main menu...\n\n");
+							System.out.println("Redirecting to main menu...\n\n");
 							break;
 						}
 					}
 				}
 
 			}else if( resp.equalsIgnoreCase("N") ){
-				System.out.println("Please Create An Account First \nBefore Proceding Further");
+				System.out.println("Please Create An Account First Before Proceding Further.\nRedirecting to main menu...");
+				diff = 0;
 				break;
 			}else{
 				System.out.println("Invalid Input!! "+ diff +" Attempts Left.");
 				if( diff == 0){
-					System.oput.println("Redirecting to main menu...\n\n");
+					System.out.println("Redirecting to main menu...\n\n");
 					break;
 				}else{
 					System.out.print("\nResponse (Y/N) :");
@@ -322,7 +327,38 @@ public class Bank {
 	public static void main(String[] args) throws Exception{
 		Scanner g=new Scanner(System.in);
 		ArrayList<Account> account = new ArrayList<Account>();
-		Loan LoanSegment = new Loan();		
+		Loan LoanSegment = new Loan();	
+		double[][][] scheme = new double[2][3][3];
+		double[][][] interest = new double[2][3][3];
+		double[][][] maxLoanAmt = new double[2][3][3];
+
+		scheme[0][0][0] = 500000 ; scheme[0][0][1] = 1000000; scheme[0][0][2] = 1500000;
+		scheme[0][1][0] = 200000; scheme[0][1][1] = 700000; scheme[0][1][2] = 1500000;
+		scheme[0][2][0] = 400000; scheme[0][2][1] = 1200000; scheme[0][2][2] = 1800000;
+
+		scheme[1][0][0] = 1500000; scheme[1][0][1] = 2500000; scheme[1][0][2] = 5000000;
+		scheme[1][1][0] = 2000000; scheme[1][1][1] = 4000000; scheme[1][1][2] = 6000000;
+		scheme[1][2][0] = 1500000; scheme[1][2][1] = 2500000; scheme[1][2][2] = 3500000;
+		LoanSegment.setScheme(scheme);
+
+		interest[0][0][0] = 10.01 ; interest[0][0][1] = 9.85; interest[0][0][2] = 8.62;
+		interest[0][1][0] = 9.85; interest[0][1][1] = 8.62; interest[0][1][2] = 8.21;
+		interest[0][2][0] = 13.25; interest[0][2][1] = 12.89; interest[0][2][2] = 12.12;
+
+		interest[1][0][0] = 8.01; interest[1][0][1] = 7.85; interest[1][0][2] = 6.62;
+		interest[1][1][0] = 8.85; interest[1][1][1] = 7.62; interest[1][1][2] = 7.21;
+		interest[1][2][0] = 10.25; interest[1][2][1] = 9.89; interest[1][2][2] = 9.12;
+		LoanSegment.setInterest(interest);
+
+		maxLoanAmt[0][0][0] = 250000 ; maxLoanAmt[0][0][1] = 800000; maxLoanAmt[0][0][2] = 1000000;
+		maxLoanAmt[0][1][0] = 100000; maxLoanAmt[0][1][1] = 350000; maxLoanAmt[0][1][2] = 750000;
+		maxLoanAmt[0][2][0] = 200000; maxLoanAmt[0][2][1] = 600000; maxLoanAmt[0][2][2] = 900000;
+
+		maxLoanAmt[1][0][0] = 750000; maxLoanAmt[1][0][1] = 1250000; maxLoanAmt[1][0][2] = 2500000;
+		maxLoanAmt[1][1][0] = 1000000; maxLoanAmt[1][1][1] = 2000000; maxLoanAmt[1][1][2] = 3000000;
+		maxLoanAmt[1][2][0] = 750000; maxLoanAmt[1][2][1] = 1300000; maxLoanAmt[1][2][2] = 1800000;
+		LoanSegment.setMaxLoanAmt(maxLoanAmt);
+
 		int choice, flag2=0;
 		Account acc ;
 		

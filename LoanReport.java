@@ -5,14 +5,23 @@ import java.text.*;
 public class LoanReport {
 	private String name;
 	private String accNo;
+	// Three types of loan >> 1. "Personal", 2."Property", 3."Auto"
 	private String loanType;
+	private String status; // "Approved", "Settled"
 	private int slab;
 	private double interest;
 	private double loanAmt;
 	private String dt;
 	private String loanId;
 	private static int rand=0;
+	private double repayAmt;
 	
+	public void setStatus( String s ){
+		status = s;
+	}
+	public String getStatus(){
+		return status;
+	}
 	public LoanReport(){}
 	public LoanReport(String nm, String ano, String lt, int sl, double inter, double la){
 		name=nm;
@@ -23,6 +32,14 @@ public class LoanReport {
 		loanAmt=la;
 		dt=DateFormat.getInstance().format(new Date());
 		setLoanId();
+		setRepayAmt();
+		setStatus("Approved");
+	}
+	public void setRepayAmt(){
+		repayAmt = loanAmt*(100+interest)*0.01;
+	}
+	public double getRepayAmt(){
+		return repayAmt ;
 	}
 	public void setName(String s){
 		name=s;
