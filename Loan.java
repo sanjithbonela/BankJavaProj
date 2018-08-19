@@ -151,7 +151,7 @@ public class Loan {
 	*/
 	//-----------------------------------------------------------------------------------
 	public void printLoanReceipt( LoanReport report ){
-		System.out.println("########################### LOAN RECEIPT ###########################");
+		System.out.println("\n\n########################### LOAN RECEIPT ###########################");
 		System.out.println("$ Loan Id : "+report.getLoanId()+"   Date : "+report.getDt() );
 		System.out.println("$ Name : "+report.getName()+ "  A/C No: "+report.getAccNo() );
 		System.out.println("$ Loan Type : "+report.getLoanType() );
@@ -160,15 +160,28 @@ public class Loan {
 		System.out.println("====================================================================\n\n");
 	}
 
-	public void personalLoan(Account acc){
+	public void loanProcessing(Account acc, String loanType){
 		String acType = acc.getAccType();
 		Scanner in = new Scanner(System.in);
-		ArrayList<LoanReport> lst = acc.getAll_SpecificLoan_Reports("Personal");
+		ArrayList<LoanReport> lst = null ;
 		double bal = acc.getBalance();
+		boolean excptn = false;
 		LoanReport newLoan;
-		double amt, limit;
+		double amt=0, limit;
 		double aggLoan = 0;
 		int slab = -1;
+		int lType = -1;
+
+		if(loanType.equals("Personal")){
+			lType = 0;
+			lst = acc.getAll_SpecificLoan_Reports("Personal");
+		}else if(loanType.equals("Property")){
+			lType = 1;
+			lst = acc.getAll_SpecificLoan_Reports("Property");
+		}else if(loanType.equals("Auto")){
+			lType = 2;
+			lst = acc.getAll_SpecificLoan_Reports("Auto");
+		}
 
 		// calculating existing Loan Amt.
 		if( !lst.isEmpty() ){
@@ -184,24 +197,34 @@ public class Loan {
 			// Getting Appropriate Slab
 			if( bal < scheme[0][0][0] ){
 				slab = -1;			
-			}else if( bal>=scheme[0][0][0] && bal<scheme[0][0][1] ){
+			}else if( bal>=scheme[0][lType][0] && bal<scheme[0][lType][1] ){
 				slab = 0;
-			}else if( bal>=scheme[0][0][1] && bal<scheme[0][0][2] ){
+			}else if( bal>=scheme[0][lType][1] && bal<scheme[0][lType][2] ){
 				slab = 1;
-			}else if( bal>=scheme[0][0][2] && bal<scheme[0][0][3] ){
+			}else if( bal>=scheme[0][lType][2] && bal<scheme[0][lType][3] ){
 				slab = 2;
 			}
 
 			if( slab >= 0 ){
-				if( aggLoan <  maxLoanAmt[0][0][slab] ){
-					limit = maxLoanAmt[0][0][slab] - aggLoan;
+				if( aggLoan <  maxLoanAmt[0][lType][slab] ){
+					limit = maxLoanAmt[0][lType][slab] - aggLoan;
 					System.out.println("Current Loan Limit: Rs."+limit);
 					System.out.print("\nRequest for Loan Amount : ");
-					amt = in.nextDouble();
+					do{
+						try{
+							System.out.print("\nRequest for Loan Amount : ");					
+							amt = in.nextDouble();
+							excptn = false;
+						}catch(InputMismatchException e){
+							System.out.println("Invalid Input. Try Again.");
+							in.nextLine();
+							excptn = true;
+						}
+					}while(excptn);
 					
 					if( amt > 0 && amt<= limit ){	
 						System.out.println("Processing... Pls Wait.");
-						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), "Personal", slab, interest[0][0][slab] ,amt );
+						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[0][lType][slab] ,amt );
 						acc.addLoan(newLoan);
 						lr.add(newLoan);
 						System.out.println("Loan Approved!!!");
@@ -223,22 +246,66 @@ public class Loan {
 			System.out.println("Redirecting to main menu...");
 
 		}else if( acType.equals("Current") ){
-			
+			// Getting Appropriate Slab
+			if( bal < scheme[1][lType][0] ){
+				slab = -1;			
+			}else if( bal>=scheme[1][lType][0] && bal<scheme[1][lType][1] ){
+				slab = 0;
+			}else if( bal>=scheme[1][lType][1] && bal<scheme[1][lType][2] ){
+				slab = 1;
+			}else if( bal>=scheme[1][lType][2] && bal<scheme[1][lType][3] ){
+				slab = 2;
+			}
+
+			if( slab >= 0 ){
+				if( aggLoan <  maxLoanAmt[1][lType][slab] ){
+					limit = maxLoanAmt[1][lType][slab] - aggLoan;
+					System.out.println("Current Loan Limit: Rs."+limit);
+					do{
+						
+						try{
+							System.out.print("\nRequest for Loan Amount : ");					
+							amt = in.nextDouble();
+							excptn = false;
+						}catch(InputMismatchException e){
+							System.out.println("Invalid Input. Try Again.");
+							in.nextLine();
+							excptn = true;
+						}
+
+					}while(excptn);
+
+					if( amt > 0 && amt<= limit ){	
+						System.out.println("Processing... Pls Wait.");
+						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[1][lType][slab] ,amt );
+						acc.addLoan(newLoan);
+						lr.add(newLoan);
+						System.out.println("Loan Approved!!!");
+						printLoanReceipt(newLoan);
+					}else if(amt > limit){
+						System.out.println("Your Request is beyond the limit. Loan Denied.");
+					}else{
+						System.out.println("Invalid Input.");
+					}
+
+				}else{
+					System.out.println("Loan limit Exceeded. Loan can't be Approved.");
+				}
+
+			}else{
+				System.out.println("You don't Have sufficient balance. Loan Denied.");
+			}
+
+			System.out.println("Redirecting to main menu...");
 		}
 
-
 	}
-	public void propertyLoan(Account acc){
-
-	}
-
-	public void autoLoan(Account acc){
-
-	}
+	
 	public void interfaceApp( Account acc ){
 		Scanner in = new Scanner(System.in);
 		int mxAttempt=3, attempt=0, diff;
-		int resp;
+		boolean excptn = false;
+		int resp = -1;
 
 		diff = mxAttempt - attempt;
 		while(diff > 0){
@@ -250,20 +317,30 @@ public class Loan {
 			System.out.println("2. Property Loan ");
 			System.out.println("3. Automobile Loan ");
 			System.out.println("4. Exit Portal ");
-			System.out.print("\nResponse : ");
-			resp = in.nextInt();
+			
+			do{
+				try{
+					System.out.print("\nResponse : ");
+					resp = in.nextInt();
+					excptn = false;
+				}catch( InputMismatchException e ){
+					System.out.println("Invalid Input. Try Again.");
+					in.nextLine();
+					excptn = true;
+				}
+			}while(excptn);
 
 			switch( resp ){
 				case 1:
-					personalLoan(acc);
+					loanProcessing(acc, "Personal");
 					diff = 0;
 					break;
 				case 2:
-					propertyLoan(acc);
+					loanProcessing(acc, "Property");
 					diff = 0;
 					break;
 				case 3:
-					autoLoan(acc);
+					loanProcessing(acc, "Auto");
 					diff = 0;
 					break;
 				case 4:
