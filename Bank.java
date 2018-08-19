@@ -253,7 +253,7 @@ public class Bank {
 		}
 	}
 	
-	public static void loanOpeartion( ArrayList<Account> account, Loan loanSegment ){
+	public static void ApplyLoan( ArrayList<Account> account, Loan loanSegment ){
 		Scanner in = new Scanner(System.in);
 		String resp, usn, pass;
 		boolean isValidUsr = false;
@@ -324,13 +324,19 @@ public class Bank {
 
 	}
 
+	public static void removeLoan( ArrayList<Account> account ){
+
+	}
+
 	public static void main(String[] args) throws Exception{
 		Scanner g=new Scanner(System.in);
+		char ch;
 		ArrayList<Account> account = new ArrayList<Account>();
 		Loan LoanSegment = new Loan();	
 		double[][][] scheme = new double[2][3][3];
 		double[][][] interest = new double[2][3][3];
 		double[][][] maxLoanAmt = new double[2][3][3];
+		boolean bkLoop = true, masterLoop = true;
 
 		scheme[0][0][0] = 500000 ; scheme[0][0][1] = 1000000; scheme[0][0][2] = 1500000;
 		scheme[0][1][0] = 200000; scheme[0][1][1] = 700000; scheme[0][1][2] = 1500000;
@@ -361,38 +367,89 @@ public class Bank {
 
 		int choice, flag2=0;
 		Account acc ;
-		
-		System.out.println("-----------------------");
-		System.out.println(" Welcome to SYS Bank!!!");
-		System.out.println("-----------------------");
 
-		while(true){
-			System.out.println("Enter your choice:");
-			System.out.println("1. New Account Opening?");
-			System.out.println("2. Existing User?");
-			System.out.println("3. Apply for Loan?");
-			System.out.println("4. Exit");
-			choice = g.nextInt();
-			g.nextLine();
-			
-			switch(choice){
-				case 1:
-					acc=createAccount(account);
-					account.add(acc);
-					break;				
-				case 2:
-					accountOperation(account);
-					break;				
-				case 3:	
-					loanOpeartion(account, LoanSegment);
-					break;				
-				case 4:
-					flag2=1;				
-					break;
+		while(masterLoop){
+			System.out.println("######################################################");
+			System.out.println(" ------------Welcome to DE-NAAAA Bank!!!--------------");
+			System.out.println("######################################################");
+
+			System.out.println("\n        A. Bank Portal     B.Customer Portal");
+			System.out.println("------------------------------------------------------");
+			System.out.println("Type X to close the portal.");
+			System.out.print("\nEnter your choice : ");
+			ch = g.nextLine().charAt(0);
+
+			if( ch=='A' || ch=='a'){				
+				while(bkLoop){
+					System.out.println("\n\n--------------Bank Portal---------------");
+					System.out.println("1. Change Loan Scheme.");
+					System.out.println("2. Get Loan Report.");
+					System.out.println("3. Get %-change in loan.");
+					System.out.println("4. Exit.");
+
+					System.out.print("\nEnter your choice : ");
+					choice = g.nextInt();
+					g.nextLine();
+
+					switch( choice ){
+						case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							bkLoop = false;
+							break;
+						default:
+							System.out.println("Invalid Input. Try Again...");
+							break;
+					}
+					System.out.println("\n");
+				}
+				System.out.println("**************************************************\n");
+			}else if( ch=='B' || ch=='b' ){
+				System.out.println("\n\n------------Customer Portal-------------\n");
+				while(true){
+					System.out.println("Enter your choice:");
+					System.out.println("1. New Account Opening?");
+					System.out.println("2. Existing User?");
+					System.out.println("3. Apply for Loan?");
+					System.out.println("4. Clear Loans.");
+					System.out.println("5. Exit");
+					choice = g.nextInt();
+					g.nextLine();
+					
+					switch(choice){
+						case 1:
+							acc=createAccount(account);
+							account.add(acc);
+							break;				
+						case 2:
+							accountOperation(account);
+							break;				
+						case 3:	
+							ApplyLoan(account, LoanSegment);
+							break;				
+						case 4:
+							removeLoan( account );				
+							break;
+						case 5:
+							flag2=1;				
+							break;
+					}
+					System.out.println("**********************************************************************************");
+					if(flag2==1) 
+						break;
+				}
+
+			}else if( ch=='X' || ch =='x' ){
+				System.out.println("\n\n>>>>>>>>> Thank You for banking with Us. _/\\_ <<<<<<<<<");
+				masterLoop = false;
+			}else{
+				System.out.println("Invalid Input. Try Again...");
 			}
-			System.out.println("**********************************************************************************");
-			if(flag2==1) 
-				break;
 		}
+		
 	}
 }
