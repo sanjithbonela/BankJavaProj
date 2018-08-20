@@ -402,7 +402,7 @@ public class Bank {
 					choice = g.nextInt();
 					g.nextLine();
 
-					attempt=0, mxAttempt=3, diff=3;
+					attempt=0; mxAttempt=3; diff=3;
 
 					switch( choice ){
 						case 1:

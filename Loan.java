@@ -32,9 +32,6 @@ public class Loan {
 	public ArrayList<LoanReport> getLr(){
 		return lr;
 	}
-	public void setAcc(Account a){
-		acc=a;
-	}
 	public double[][][] getScheme(){
 		return scheme;
 	}
@@ -43,9 +40,6 @@ public class Loan {
 	}
 	public double[][][] getInterest(){
 		return interest;
-	}
-	public Account getAcc(){
-		return acc;
 	}
 	//------------------------------Sanjit Loan Interface--------------------------------
 	/*public void addLoan(){
