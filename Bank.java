@@ -165,10 +165,10 @@ public class Bank {
 								acc.displayTransReport();
 								break;
 							case 5:
-								acc.viewLoan(acc);
+								acc.viewLoan();
 								break;
 							case 6:
-								acc.settleLoan(acc);
+								acc.settleLoan();
 								//acc.updateDetails();
 								break;
 							case 7:
@@ -480,7 +480,7 @@ public class Bank {
 							account.add(acc);
 							break;				
 						case 2:
-							accountOperation(account, LoanSegment);
+							accountOperation(account);
 							break;				
 						case 3:	
 							ApplyLoan(account, LoanSegment);

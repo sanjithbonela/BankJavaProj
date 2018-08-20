@@ -158,7 +158,166 @@ public class Account {
 	}
 
 	public void settleLoan(){
-		
+		Scanner in = new Scanner(System.in);
+		int attempt = 3, setlAttempt = 3, count = 0;
+		boolean masterLoop = true;
+		LoanReport lRep;
+		ArrayList<LoanReport> lst = new ArrayList<LoanReport>();
+		double amt=0;
+		double amtRe=0;
+		int ch, lnNo;
+
+		while( masterLoop ){
+			System.out.println("\n\n=========Settle Loan(s) Portal=========");
+			System.out.println("1. Personal Loan.");
+			System.out.println("2. Property Loan.");
+			System.out.println("3. Auto Loan.");
+			System.out.println("4. Exit.");
+			
+			while(attempt > 0){
+				System.out.print("\nEnter Your Choice : ");
+				ch = in.nextInt();
+				switch( ch ){
+					case 1:
+						System.out.println("\nPersonal Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Personal") && rep.getStatus().equals("Approved") ){
+								count++;
+								amt += rep.getLoanAmt();
+								amtRe += rep.getRepayAmt();
+								lst.add(rep);
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Personal Loans to settle.\n");
+						}else{
+							System.out.println("Total Personal Loan Amount: Rs."+amt);
+							System.out.println("Total Personal Loan Repay Amount: Rs."+amtRe);
+							System.out.println("Account Balance: Rs."+balance);
+							
+							while( setlAttempt>0 ){
+								System.out.print("\nEnter the Loan number to settle : ");
+								lnNo = in.nextInt();
+								if( lnNo>0 && lnNo<=count ){
+									lRep = lst.get(lnNo-1);
+									if( lRep.getRepayAmt() < balance ){
+										balance -= lRep.getRepayAmt();
+										lRep.setStatus("Settled");
+										System.out.println("Loan for LoanId:"+lRep.getLoanId()+" is Settled.");
+										System.out.println("New Balance: Rs."+balance);
+									}
+									setlAttempt = 0;
+								}else{
+									setlAttempt--;
+									System.out.println("Invalid Input. Try Again. "+setlAttempt+" attempts remains.");
+								}
+							}
+
+						}
+						lst.clear();
+						setlAttempt = 3;
+						count = 0; amt = 0; amtRe = 0;
+						attempt = 0;
+						break;
+					case 2:
+						System.out.println("\nProperty Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Property") && rep.getStatus().equals("Approved")){
+								count++;
+								amt += rep.getLoanAmt();
+								amtRe += rep.getRepayAmt();
+								lst.add(rep);
+								System.out.println(count+".) Loan_Type::Property  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Property Loans to settle.\n");
+						}else{
+							System.out.println("Total Property Loan Amount: Rs."+amt);
+							System.out.println("Total Property Loan Repay Amount: Rs."+amtRe);
+							System.out.println("Account Balance: Rs."+balance);
+							
+							while( setlAttempt>0 ){
+								System.out.print("\nEnter the Loan number to settle : ");
+								lnNo = in.nextInt();
+								if( lnNo>0 && lnNo<=count ){
+									lRep = lst.get(lnNo-1);
+									if( lRep.getRepayAmt() < balance ){
+										balance -= lRep.getRepayAmt();
+										lRep.setStatus("Settled");
+										System.out.println("Loan for LoanId:"+lRep.getLoanId()+" is Settled.");
+										System.out.println("New Balance: Rs."+balance);
+									}
+									setlAttempt = 0;
+								}else{
+									setlAttempt--;
+									System.out.println("Invalid Input. Try Again. "+setlAttempt+" attempts remains.");
+								}
+							}
+						}
+						lst.clear();
+						setlAttempt = 3;
+						count = 0; amt = 0; amtRe = 0;
+						attempt = 0;
+						break;
+					case 3:
+						System.out.println("\nAuto Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Auto") && rep.getStatus().equals("Approved")){
+								count++;
+								amt += rep.getLoanAmt();
+								amtRe += rep.getRepayAmt();
+								lst.add(rep);
+								System.out.println(count+".) Loan_Type::Auto  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Auto Loans to settle.\n");
+						}else{
+							System.out.println("Total Auto Loan Amount: Rs."+amt);
+							System.out.println("Total Auto Loan Repay Amount: Rs."+amtRe);
+							System.out.println("Account Balance: Rs."+balance);
+							
+							while( setlAttempt>0 ){
+								System.out.print("\nEnter the Loan number to settle : ");
+								lnNo = in.nextInt();
+								if( lnNo>0 && lnNo<=count ){
+									lRep = lst.get(lnNo-1);
+									if( lRep.getRepayAmt() < balance ){
+										balance -= lRep.getRepayAmt();
+										lRep.setStatus("Settled");
+										System.out.println("Loan for LoanId:"+lRep.getLoanId()+" is Settled.");
+										System.out.println("New Balance: Rs."+balance);
+									}
+									setlAttempt = 0;
+								}else{
+									setlAttempt--;
+									System.out.println("Invalid Input. Try Again. "+setlAttempt+" attempts remains.");
+								}
+							}
+						}
+						lst.clear();
+						setlAttempt = 3;
+						count = 0; amt = 0; amtRe = 0;
+						attempt = 0;	
+						break;
+					case 4:
+						attempt = 0;
+						masterLoop = false;
+						break;
+					default:
+						attempt--;
+						if( attempt > 0)
+							System.out.println("Invalid Input. Try Again. "+attempt+" attempts left.");
+						else
+							masterLoop = false;
+						break;
+				}
+			}
+			attempt = 3;
+		}
+		System.out.println("Redirecting to Customer Portal...\n");
 	}
 	//=====================================================================
 	public void setAccNo(){
