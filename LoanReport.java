@@ -18,6 +18,10 @@ public class LoanReport {
 	private static int rand=0;
 	private double repayAmt;
 	
+	
+	public String getCType() {
+		return cType;
+	}
 	public void setStatus( String s ){
 		status = s;
 	}

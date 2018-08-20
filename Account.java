@@ -61,13 +61,13 @@ public class Account {
 								count++;
 								amtPer += rep.getLoanAmt();
 								amtRePer += rep.getRepayAmt();
-								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Status::"+rep.getStatus()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
 							}
 						}
 						if( count == 0 ){
 							System.out.println("You have No Registered Personal Loans.\n");
 						}else{
-							System.out.println("Total Personal Loan Amount: Rs."+amtPer);
+							System.out.println("\nTotal Personal Loan Amount: Rs."+amtPer);
 							System.out.println("Total Personal Loan Repay Amount: Rs."+amtRePer);
 						}
 						count = 0; amtPer = 0; amtRePer = 0;
@@ -80,13 +80,13 @@ public class Account {
 								count++;
 								amtProp += rep.getLoanAmt();
 								amtReProp += rep.getRepayAmt();
-								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Status::"+rep.getStatus()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
 							}
 						}
 						if( count == 0 ){
 							System.out.println("You have No Registered Property Loans.\n");
 						}else{
-							System.out.println("Total Property Loan Amount: Rs."+amtProp);
+							System.out.println("\nTotal Property Loan Amount: Rs."+amtProp);
 							System.out.println("Total Property Loan Repay Amount: Rs."+amtReProp);
 						}
 						count = 0; amtProp = 0; amtReProp = 0;
@@ -99,13 +99,13 @@ public class Account {
 								count++;
 								amtAuto += rep.getLoanAmt();
 								amtReAuto += rep.getRepayAmt();
-								System.out.println(count+".) Loan_Type::Auto  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+								System.out.println(count+".) Loan_Type::Auto  Loan_ID::"+rep.getLoanId()+"  Status::"+rep.getStatus()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
 							}
 						}
 						if( count == 0 ){
 							System.out.println("You have No Registered Auto Loans.\n");
 						}else{
-							System.out.println("Total Auto Loan Amount: Rs."+amtAuto);
+							System.out.println("\nTotal Auto Loan Amount: Rs."+amtAuto);
 							System.out.println("Total Auto Loan Repay Amount: Rs."+amtReAuto);
 						}
 						count = 0; amtAuto = 0; amtReAuto = 0;
@@ -126,7 +126,6 @@ public class Account {
 								cPer++;
 								amtPer += rep.getLoanAmt();
 								amtRePer += rep.getRepayAmt();
-								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
 							}
 						}
 						

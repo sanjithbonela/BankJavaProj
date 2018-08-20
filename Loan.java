@@ -203,7 +203,6 @@ public class Loan {
 				if( aggLoan <  maxLoanAmt[0][lType][slab] ){
 					limit = maxLoanAmt[0][lType][slab] - aggLoan;
 					System.out.println("Current Loan Limit: Rs."+limit);
-					System.out.print("\nRequest for Loan Amount : ");
 					do{
 						try{
 							System.out.print("\nRequest for Loan Amount : ");					
