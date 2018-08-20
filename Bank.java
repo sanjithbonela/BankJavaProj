@@ -120,13 +120,13 @@ public class Bank {
 						System.out.printf("Your Balance is Rs.%.2f\n", account.get(i).getBalance());
 						flag3=1;
 						// ---Account Menu----
-						System.out.println("---------------------------");
+						System.out.println("========= Customer Portal =========");
 						System.out.println("1. Deposit Amount.");
 						System.out.println("2. Withdraw Amount.");
 						System.out.println("3. Transfer Amount.");
 						System.out.println("4. Show Mini Statement.");
-						System.out.println("5. Close Loans.");
-						System.out.println("6. View Loans.");
+						System.out.println("5. View Loans.");
+						System.out.println("6. Close Loans.");
 						System.out.println("7. Update Details.");
 						System.out.println("8. View Details.");
 						System.out.println("9. Remove Account");
@@ -165,10 +165,11 @@ public class Bank {
 								acc.displayTransReport();
 								break;
 							case 5:
-								
+								acc.viewLoan(acc);
 								break;
 							case 6:
-								acc.updateDetails();
+								acc.settleLoan(acc);
+								//acc.updateDetails();
 								break;
 							case 7:
 								acc.getDetails();
@@ -381,7 +382,7 @@ public class Bank {
 
 		while(masterLoop){
 			System.out.println("######################################################");
-			System.out.println(" ---------------Welcome to SYS Bank!!!----------------");
+			System.out.println(" -------------Welcome to DE_/\\_NAAA Bank!!!--------------");
 			System.out.println("######################################################");
 
 			System.out.println("\n        A. Bank Portal     B.Customer Portal");
@@ -479,7 +480,7 @@ public class Bank {
 							account.add(acc);
 							break;				
 						case 2:
-							accountOperation(account);
+							accountOperation(account, LoanSegment);
 							break;				
 						case 3:	
 							ApplyLoan(account, LoanSegment);

@@ -33,6 +33,133 @@ public class Account {
 
 		return lst;
 	}
+
+	public void viewLoan(){
+		Scanner in = new Scanner(System.in);
+		int attempt = 3, count = 0, cPer = 0, cProp = 0, cAuto = 0;
+		boolean masterLoop = true;
+		double amtPer=0, amtProp=0, amtAuto=0;
+		double amtRePer=0, amtReProp=0, amtReAuto=0;
+		int ch;
+
+		while( masterLoop ){
+			System.out.println("\n\n=========View Loan(s) Portal=========");
+			System.out.println("1. Personal Loan.");
+			System.out.println("2. Property Loan.");
+			System.out.println("3. Auto Loan.");
+			System.out.println("4. Loan Summary.");
+			System.out.println("5. Exit.");
+			
+			while(attempt > 0){
+				System.out.print("\nEnter Your Choice : ");
+				ch = in.nextInt();
+				switch( ch ){
+					case 1:
+						System.out.println("\nPersonal Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Personal")){
+								count++;
+								amtPer += rep.getLoanAmt();
+								amtRePer += rep.getRepayAmt();
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Registered Personal Loans.\n");
+						}else{
+							System.out.println("Total Personal Loan Amount: Rs."+amtPer);
+							System.out.println("Total Personal Loan Repay Amount: Rs."+amtRePer);
+						}
+						count = 0; amtPer = 0; amtRePer = 0;
+						attempt = 0;
+						break;
+					case 2:
+						System.out.println("\nProperty Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Property")){
+								count++;
+								amtProp += rep.getLoanAmt();
+								amtReProp += rep.getRepayAmt();
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Registered Property Loans.\n");
+						}else{
+							System.out.println("Total Property Loan Amount: Rs."+amtProp);
+							System.out.println("Total Property Loan Repay Amount: Rs."+amtReProp);
+						}
+						count = 0; amtProp = 0; amtReProp = 0;
+						attempt = 0;
+						break;
+					case 3:
+						System.out.println("\nAuto Loan List :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Auto")){
+								count++;
+								amtAuto += rep.getLoanAmt();
+								amtReAuto += rep.getRepayAmt();
+								System.out.println(count+".) Loan_Type::Auto  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						if( count == 0 ){
+							System.out.println("You have No Registered Auto Loans.\n");
+						}else{
+							System.out.println("Total Auto Loan Amount: Rs."+amtAuto);
+							System.out.println("Total Auto Loan Repay Amount: Rs."+amtReAuto);
+						}
+						count = 0; amtAuto = 0; amtReAuto = 0;
+						attempt = 0;	
+						break;
+					case 4:
+						System.out.println("\nLoan Summary :");
+						for(LoanReport rep : loanBk){
+							if( rep.getLoanType().equals("Auto")){
+								cAuto++;
+								amtAuto += rep.getLoanAmt();
+								amtReAuto += rep.getRepayAmt();
+							}else if( rep.getLoanType().equals("Property")) {
+								cProp++;
+								amtProp += rep.getLoanAmt();
+								amtReProp += rep.getRepayAmt();
+							}else if( rep.getLoanType().equals("Personal")){
+								cPer++;
+								amtPer += rep.getLoanAmt();
+								amtRePer += rep.getRepayAmt();
+								System.out.println(count+".) Loan_Type::Personal  Loan_ID::"+rep.getLoanId()+"  Date::"+rep.getDt()+"  Loan_Amount::Rs."+rep.getLoanAmt()+"  Repay_Amount::Rs."+rep.getRepayAmt());
+							}
+						}
+						
+						System.out.println("Loan_Type::Personal  Count::"+ cPer +"  Total_Loan_Amt::Rs."+amtPer+"  Total_LoanRepay_Amt::Rs."+amtRePer);
+						System.out.println("Loan_Type::Property  Count::"+ cProp +"  Total_Loan_Amt::Rs."+amtProp+"  Total_LoanRepay_Amt::Rs."+amtReProp);
+						System.out.println("Loan_Type::Auto      Count::"+ cAuto +"  Total_Loan_Amt::Rs."+amtAuto+"  Total_LoanRepay_Amt::Rs."+amtReAuto);
+						System.out.println("\nTotalLoanAmt : Rs."+(amtPer+amtProp+amtAuto)+ "    TotalRepayAmt : Rs."+(amtRePer+amtReProp+amtReAuto));
+						amtPer=0; amtProp=0; amtAuto=0;
+						amtRePer=0; amtReProp=0; amtReAuto=0;
+						attempt = 0;
+						break;
+					case 5:
+						attempt = 0;
+						masterLoop = false;
+						break;
+					default:
+						attempt--;
+						if( attempt > 0)
+							System.out.println("Invalid Input. Try Again. "+attempt+" attempts left.");
+						else
+							masterLoop = false;
+						break;
+				}
+			}
+			attempt = 3;
+		}
+		System.out.println("Redirecting to Customer Portal...\n");
+
+	}
+
+	public void settleLoan(){
+		
+	}
 	//=====================================================================
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
@@ -237,5 +364,4 @@ public class Account {
 		if(userName.equals(usn)&& password.equals(pass)) return true;
 		return false;
 	}
-
 }
