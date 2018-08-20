@@ -7,6 +7,8 @@ public class LoanReport {
 	private String accNo;
 	// Three types of loan >> 1. "Personal", 2."Property", 3."Auto"
 	private String loanType;
+	private String cType;
+	private String cID;
 	private String status; // "Approved", "Settled"
 	private int slab;
 	private double interest;
@@ -23,7 +25,7 @@ public class LoanReport {
 		return status;
 	}
 	public LoanReport(){}
-	public LoanReport(String nm, String ano, String lt, int sl, double inter, double la){
+	public LoanReport(String nm, String ano, String lt, int sl, double inter, double la, String cType, String cID ){
 		name=nm;
 		accNo=ano;
 		loanType=lt;
@@ -34,6 +36,8 @@ public class LoanReport {
 		setLoanId();
 		setRepayAmt();
 		setStatus("Approved");
+		this.cType = cType;
+		this.cID = cID;
 	}
 	public void setRepayAmt(){
 		repayAmt = loanAmt*(100+interest)*0.01;

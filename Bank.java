@@ -125,11 +125,12 @@ public class Bank {
 						System.out.println("2. Withdraw Amount.");
 						System.out.println("3. Transfer Amount.");
 						System.out.println("4. Show Mini Statement.");
-						System.out.println("5. Apply for Loans.");
-						System.out.println("6. Update Details.");
-						System.out.println("7. View Details.");
-						System.out.println("8. Remove Account");
-						System.out.println("9. Log Out.");
+						System.out.println("5. Close Loans.");
+						System.out.println("6. View Loans.");
+						System.out.println("7. Update Details.");
+						System.out.println("8. View Details.");
+						System.out.println("9. Remove Account");
+						System.out.println("10. Log Out.");
 						System.out.println("---------------------------");
 						System.out.print("Enter Choice Number: ");
 						AcInput = g.nextInt();
@@ -325,7 +326,16 @@ public class Bank {
 	}
 
 	public static void removeLoan( ArrayList<Account> account ){
+	}
 
+	// ToDo - (1)
+	public static void bkLoanScheme( Loan LoanSegment, int choice ){
+
+	}
+
+	// ToDo - (2)
+	public static void bkLoanReport( Loan LoanSegment, int choice ){
+		
 	}
 
 	public static void main(String[] args) throws Exception{
@@ -366,6 +376,7 @@ public class Bank {
 		LoanSegment.setMaxLoanAmt(maxLoanAmt);
 
 		int choice, flag2=0;
+		int attempt=0, mxAttempt=3, diff=3;
 		Account acc ;
 
 		while(masterLoop){
@@ -382,7 +393,7 @@ public class Bank {
 			if( ch=='A' || ch=='a'){				
 				while(bkLoop){
 					System.out.println("\n\n--------------Bank Portal---------------");
-					System.out.println("1. Change Loan Scheme.");
+					System.out.println("1. Loan Scheme.");
 					System.out.println("2. Get Loan Report.");
 					System.out.println("3. Get %-change in loan.");
 					System.out.println("4. Exit.");
@@ -391,10 +402,52 @@ public class Bank {
 					choice = g.nextInt();
 					g.nextLine();
 
+					attempt=0, mxAttempt=3, diff=3;
+
 					switch( choice ){
 						case 1:
+							while( diff != 0 ){
+								System.out.println("1. View Loan Scheme.");
+								System.out.println("2. Change Loan Scheme.");
+								System.out.println("3. Exit.");
+								System.out.print("Enter Your Choice : ");
+								choice = g.nextInt();
+								g.nextLine();
+
+								if(  choice>0 && choice<3 ){
+									bkLoanScheme( LoanSegment, choice ); // ToDo - (1)
+									diff = 0;
+								}else if (choice == 3){
+									diff = 0;
+								}else{
+									diff--;
+									if( diff != 0)
+										System.out.println("Invalid Input. Try Again. "+diff+" Attempts remains.");
+								}
+							}
+							System.out.println("Redirecting to Bank Portal...");
 							break;
 						case 2:
+							while( diff != 0 ){
+								System.out.println("1. Get Corporate Loan Report.");
+								System.out.println("2. Get Savings Loan Report.");
+								System.out.println("3. Get All Loan Reports.");
+								System.out.println("4. Exit.");
+								System.out.print("Enter Your Choice : ");
+								choice = g.nextInt();
+								g.nextLine();
+								if(  choice>0 && choice<4 ){
+									bkLoanReport( LoanSegment, choice ); // ToDo - (2)
+									diff = 0;
+								}else if( choice == 4 ){
+									diff = 0;
+								}else{
+									diff--;
+									if( diff != 0)
+										System.out.println("Invalid Input. Try Again. "+diff+" Attempts remains.");
+								}
+							}
+							System.out.println("Redirecting to Bank Portal...");
 							break;
 						case 3:
 							break;

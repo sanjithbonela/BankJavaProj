@@ -2,7 +2,7 @@ package BankJavaProj;
 import java.util.*;
 
 public class Loan {
-	private Account acc;
+	//private Account acc;
 	/*
 		Scheme defines the threshold for different min limits of loan for 
 		each category i.e., Individual loan[0], house loan[1] and Auto Loan[2] for
@@ -224,7 +224,7 @@ public class Loan {
 					
 					if( amt > 0 && amt<= limit ){	
 						System.out.println("Processing... Pls Wait.");
-						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[0][lType][slab] ,amt );
+						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[0][lType][slab] ,amt, "Savings", acc.getAccNo() );
 						acc.addLoan(newLoan);
 						lr.add(newLoan);
 						System.out.println("Loan Approved!!!");
@@ -277,7 +277,7 @@ public class Loan {
 
 					if( amt > 0 && amt<= limit ){	
 						System.out.println("Processing... Pls Wait.");
-						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[1][lType][slab] ,amt );
+						newLoan = new LoanReport(acc.getC().getName() , acc.getAccNo(), loanType, slab, interest[1][lType][slab] ,amt, "Current", acc.getAccNo() );
 						acc.addLoan(newLoan);
 						lr.add(newLoan);
 						System.out.println("Loan Approved!!!");
