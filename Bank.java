@@ -381,7 +381,7 @@ public class Bank {
 
 		while(masterLoop){
 			System.out.println("######################################################");
-			System.out.println(" ------------Welcome to DE-NAAAA Bank!!!--------------");
+			System.out.println(" ---------------Welcome to SYS Bank!!!----------------");
 			System.out.println("######################################################");
 
 			System.out.println("\n        A. Bank Portal     B.Customer Portal");
