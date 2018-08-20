@@ -1,5 +1,3 @@
-package BankJavaProj;
-
 import java.text.*;
 import java.util.*;
 public class Account {
@@ -10,14 +8,30 @@ public class Account {
 	protected Customer c;
 	protected static int rand=1;
 	protected double balance=0;
-	//protected int cThreshold;
-	//protected int sThreshold;
-	//private float SancLoanAmt;
+	private ArrayList<LoanReport> loanBk = new ArrayList<LoanReport>();
 	protected String dt;
 	protected Calendar cal;
 	protected ArrayList<Transaction> t=new ArrayList<Transaction>();
 	protected String accType;
+	/*=====================================================================
+	    ----------------------- Loan Segment ---------------------------
+	=====================================================================*/
+	public void addLoan(LoanReport newLoan){
+		loanBk.add(newLoan);
+	}
 	
+	public ArrayList<LoanReport> getAll_SpecificLoan_Reports( String loanType ){
+		ArrayList<LoanReport> lst = new ArrayList<LoanReport>();
+
+		for(LoanReport report: loanBk){
+			if(report.getLoanType().equals(loanType)){
+				lst.add(report);
+			}
+		}
+
+		return lst;
+	}
+	//=====================================================================
 	public void setAccNo(){
 		accNo = "2018FREEZE00000" + String.valueOf(rand);
 		rand++;
@@ -31,7 +45,8 @@ public class Account {
 		dt=DateFormat.getInstance().format(new Date());
 	}
 	public void setC(Customer n){
-		c=new Customer(n.getName(), n.getMobNo(), n.getAddress(), n.getPAN());
+		//c = new Customer(n.getName(), n.getMobNo(), n.getAddress(), n.getPAN());
+		c = n;
 	}
 	public void setAct(String s){
 		act=s;

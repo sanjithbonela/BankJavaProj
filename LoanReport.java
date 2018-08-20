@@ -1,20 +1,29 @@
-package BankJavaProj;
-
 import java.util.*;
 import java.text.*;
 public class LoanReport {
 	private String name;
 	private String accNo;
+	// Three types of loan >> 1. "Personal", 2."Property", 3."Auto"
 	private String loanType;
+	private String cType;
+	private String cID;
+	private String status; // "Approved", "Settled"
 	private int slab;
 	private double interest;
 	private double loanAmt;
 	private String dt;
 	private String loanId;
 	private static int rand=0;
+	private double repayAmt;
 	
+	public void setStatus( String s ){
+		status = s;
+	}
+	public String getStatus(){
+		return status;
+	}
 	public LoanReport(){}
-	public LoanReport(String nm, String ano, String lt, int sl, double inter, double la){
+	public LoanReport(String nm, String ano, String lt, int sl, double inter, double la, String cType, String cID ){
 		name=nm;
 		accNo=ano;
 		loanType=lt;
@@ -23,6 +32,16 @@ public class LoanReport {
 		loanAmt=la;
 		dt=DateFormat.getInstance().format(new Date());
 		setLoanId();
+		setRepayAmt();
+		setStatus("Approved");
+		this.cType = cType;
+		this.cID = cID;
+	}
+	public void setRepayAmt(){
+		repayAmt = loanAmt*(100+interest)*0.01;
+	}
+	public double getRepayAmt(){
+		return repayAmt ;
 	}
 	public void setName(String s){
 		name=s;
@@ -75,5 +94,8 @@ public class LoanReport {
 	}
 	public double getLoanAmt(){
 		return loanAmt;
+	}
+	public String getCType(){
+		return cType;
 	}
 }

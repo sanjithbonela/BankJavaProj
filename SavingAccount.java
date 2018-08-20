@@ -1,5 +1,3 @@
-package BankJavaProj;
-
 public class SavingAccount extends Account {
 	private double threshold;
 	

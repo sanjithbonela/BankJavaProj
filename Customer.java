@@ -1,5 +1,3 @@
-package BankJavaProj;
-
 public class Customer {
 	private String name;
 	private long mobNo;
